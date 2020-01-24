@@ -131,10 +131,10 @@ module.exports.signUpController = async (username, password) => {
     return response
 }
 
-const checkIfProductExists = async (name, price) => {
+const checkIfProductExists = async (name, price, userid) => {
     let response
-    query = 'SELECT COUNT(1) FROM products WHERE name=$1 AND price=$2';
-    values = [name, price];
+    query = 'SELECT COUNT(1) FROM products WHERE name=$1 AND price=$2 AND userid=$3';
+    values = [name, price, userid];
     await client.query(query, values).then(async res => {
         if (res.rows[0].count == 1) {
             response = true
@@ -152,7 +152,7 @@ module.exports.addProductController = async (name, price) => {
     getTimeStamp = await _getTimeStamp();
     name = name.trim();
     let response;
-    let postExists = await checkIfProductExists(name, price);
+    let postExists = await checkIfProductExists(name, price, userid);
     if (postExists) {
         response = {
             error: 1,
@@ -160,8 +160,8 @@ module.exports.addProductController = async (name, price) => {
         }
     } else {
         let insertQuery = {
-            text: 'INSERT INTO products(name, price, timestamp) VALUES ($1,$2,$3) RETURNING *',
-            values: [name, price, getTimeStamp]
+            text: 'INSERT INTO products(name, price, timestamp, userid) VALUES ($1,$2,$3,$4) RETURNING *',
+            values: [name, price, getTimeStamp, userid]
         }
         await client.query(insertQuery).then(async res => {
             response = {

@@ -108,9 +108,9 @@ router.post('/add-product', verifyToken, [
         return res.json({ error: 1, message: 'check your inputs and make sure they exists and they are correct' });
     } else {
         // deformating all data
-        const { name, price } = req.body;
+        const { name, price, userid } = req.body;
         // when everything is okay
-        await addProductController(name, price).then(response => {
+        await addProductController(name, price, userid).then(response => {
             return res.json({ response });
         }).then(e => {
             console.log(e);
