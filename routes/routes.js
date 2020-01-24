@@ -113,7 +113,7 @@ router.post('/add-product', verifyToken, [
         // when everything is okay
         await addProductController(name, price, userid, details).then(response => {
             return res.json({ response });
-        }).then(e => {
+        }).catch(e => {
             console.log(e);
         })
     }
