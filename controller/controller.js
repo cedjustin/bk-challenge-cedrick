@@ -148,7 +148,7 @@ const checkIfProductExists = async (name, price, userid) => {
 }
 
 // function to add a post or product
-module.exports.addProductController = async (name, price, details) => {
+module.exports.addProductController = async (name, price, userid,details) => {
     getTimeStamp = await _getTimeStamp();
     name = name.trim();
     let response;
