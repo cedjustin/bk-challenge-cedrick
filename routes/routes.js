@@ -101,6 +101,7 @@ router.post('/add-product', verifyToken, [
     check('name').exists().withMessage('You must provide a product name'),
     check('price').exists().withMessage('You must provide the price of the product'),
     check('userid').exists().withMessage('You must provide the userid of the user who added the product'),
+    check('details').exists().withMessage('You must provide the details of a product'),
 ], async (req, res) => {
     // validating data
     const errors = validationResult(req);
@@ -108,9 +109,9 @@ router.post('/add-product', verifyToken, [
         return res.json({ error: 1, message: 'check your inputs and make sure they exists and they are correct' });
     } else {
         // deformating all data
-        const { name, price, userid } = req.body;
+        const { name, price, userid, details } = req.body;
         // when everything is okay
-        await addProductController(name, price, userid).then(response => {
+        await addProductController(name, price, userid, details).then(response => {
             return res.json({ response });
         }).then(e => {
             console.log(e);

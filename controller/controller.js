@@ -148,7 +148,7 @@ const checkIfProductExists = async (name, price, userid) => {
 }
 
 // function to add a post or product
-module.exports.addProductController = async (name, price) => {
+module.exports.addProductController = async (name, price, details) => {
     getTimeStamp = await _getTimeStamp();
     name = name.trim();
     let response;
@@ -160,8 +160,8 @@ module.exports.addProductController = async (name, price) => {
         }
     } else {
         let insertQuery = {
-            text: 'INSERT INTO products(name, price, timestamp, userid) VALUES ($1,$2,$3,$4) RETURNING *',
-            values: [name, price, getTimeStamp, userid]
+            text: 'INSERT INTO products(name, price, timestamp, userid, details) VALUES ($1,$2,$3,$4, $5) RETURNING *',
+            values: [name, price, getTimeStamp, userid, details]
         }
         await client.query(insertQuery).then(async res => {
             response = {
@@ -185,7 +185,7 @@ module.exports.addProductController = async (name, price) => {
 module.exports.getProductsController = async (offset) => {
     let response;
     getPostsQuery = {
-        text: 'SELECT name,price,timestamp FROM products ORDER BY name ASC OFFSET $1 FETCH FIRST 10 ROWS ONLY',
+        text: 'SELECT name,price,timestamp,details FROM products ORDER BY name ASC OFFSET $1 FETCH FIRST 10 ROWS ONLY',
         values: [offset]
     }
     await client.query(getPostsQuery).then(async res => {
