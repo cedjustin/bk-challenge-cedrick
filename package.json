@@ -1,0 +1,24 @@
+{
+  "name": "products-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "*",
+    "cors": "*",
+    "dotenv": "^8.1.0",
+    "express": "*",
+    "express-validator": "*",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.24.0",
+    "multer": "*",
+    "nodemailer": "^6.4.1",
+    "pg": "*"
+  }
+}
